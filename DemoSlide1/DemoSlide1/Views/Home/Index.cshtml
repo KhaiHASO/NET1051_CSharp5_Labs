@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="fade-in">
+    <div class="hero-section">
+        <h1 class="hero-title">Chào mừng đến với DemoSlide1</h1>
+        <p class="hero-subtitle">Ứng dụng minh họa ASP.NET Core Identity với giao diện hiện đại.</p>
+        <p>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <a class="btn btn-light btn-lg text-primary fw-bold" asp-area="Identity" asp-page="/Account/Manage/Index">Quản lý tài khoản</a>
+            }
+            else
+            {
+                <a class="btn btn-light btn-lg text-primary fw-bold" asp-area="Identity" asp-page="/Account/Register">Tham gia ngay</a>
+            }
+        </p>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0">
+                <div class="card-body text-center p-4">
+                    <h3 class="h5 fw-bold text-primary mb-3">Bảo mật cao</h3>
+                    <p class="text-muted">Tích hợp sẵn hệ thống xác thực và phân quyền mạnh mẽ của ASP.NET Core Identity.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0">
+                <div class="card-body text-center p-4">
+                    <h3 class="h5 fw-bold text-secondary mb-3">Giao diện hiện đại</h3>
+                    <p class="text-muted">Thiết kế đẹp mắt với hiệu ứng glassmorphism, gradient và animations mượt mà.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0">
+                <div class="card-body text-center p-4">
+                    <h3 class="h5 fw-bold text-success mb-3">Dễ dàng mở rộng</h3>
+                    <p class="text-muted">Cấu trúc dự án chuẩn MVC, dễ dàng tùy biến và phát triển thêm tính năng.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

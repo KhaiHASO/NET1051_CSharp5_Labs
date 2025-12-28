@@ -1,0 +1,28 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Đăng xuất";
+}
+
+<header class="text-center mt-5 fade-in">
+    <div class="card d-inline-block border-0 p-5 shadow-sm">
+        <h1 class="text-primary mb-3">@ViewData["Title"]</h1>
+        @{
+            if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                    <button type="submit" class="btn btn-primary btn-lg">Bấm vào đây để đăng xuất</button>
+                </form>
+            }
+            else
+            {
+                 <div class="alert alert-success d-inline-block" role="alert">
+                    Bạn đã đăng xuất thành công khỏi ứng dụng.
+                </div>
+                <div class="mt-3">
+                    <a href="/" class="btn btn-outline-primary">Về trang chủ</a>
+                </div>
+            }
+        }
+    </div>
+</header>
