@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Chào mừng đến với DemoSlide2</h1>
+    <p class="lead">Demo ASP.NET Core Identity - UserManager & RoleManager</p>
+    <hr />
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Account Management</h5>
+                    <p class="card-text">Đăng ký, đăng nhập, đổi mật khẩu</p>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Đăng ký</a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-secondary">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User Management</h5>
+                    <p class="card-text">Quản lý danh sách users (CRUD)</p>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Users" asp-action="Index" class="btn btn-primary">Quản lý Users</a>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Vui lòng đăng nhập để sử dụng</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Role Management</h5>
+                    <p class="card-text">Quản lý roles và phân quyền (Admin only)</p>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Administration" asp-action="ListRoles" class="btn btn-primary">Quản lý Roles</a>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Chỉ dành cho Admin</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <div class="mt-4">
+            <p><strong>Thông tin đăng nhập:</strong></p>
+            <p>Tên đăng nhập: @User.Identity.Name</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <p class="badge bg-danger">Bạn là Admin</p>
+            }
+            else if (User.IsInRole("User"))
+            {
+                <p class="badge bg-info">Bạn là User</p>
+            }
+        </div>
+    }
+</div>
