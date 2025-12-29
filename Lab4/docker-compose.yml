@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_fpt_lab
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "FptPoly@2025"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:
+
+    #"Server=localhost,1433;Database=DemoSlide4Db;User Id=sa;Password=FptPoly@2025;TrustServerCertificate=True;MultipleActiveResultSets=true"

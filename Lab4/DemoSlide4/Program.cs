@@ -51,7 +51,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthentication();
@@ -64,6 +64,47 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapRazorPages(); // Cần thiết cho Identity UI mặc định
+app.MapRazorPages();
+
+// Seed Data
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await InitialDbSeed(services);
+}
 
 app.Run();
+
+async Task InitialDbSeed(IServiceProvider services)
+{
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    
+    // 1. Tạo Admin User
+    var adminEmail = "admin@neon.system";
+    if (await userManager.FindByEmailAsync(adminEmail) == null)
+    {
+        var admin = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+        await userManager.CreateAsync(admin, "Admin@123");
+        // Gán claim Admin cho Bài 2
+        await userManager.AddClaimAsync(admin, new Claim("Admin", "true"));
+    }
+
+    // 2. Tạo Sales User
+    var salesEmail = "sales@neon.system";
+    if (await userManager.FindByEmailAsync(salesEmail) == null)
+    {
+        var sales = new IdentityUser { UserName = salesEmail, Email = salesEmail, EmailConfirmed = true };
+        await userManager.CreateAsync(sales, "Sales@123");
+        // Gán claim Sales cho Bài 2 và CreateProduct cho Bài 1
+        await userManager.AddClaimAsync(sales, new Claim("Sales", "true"));
+        await userManager.AddClaimAsync(sales, new Claim("CreateProduct", "true"));
+    }
+
+    // 3. Tạo User thường (không có quyền)
+    var userEmail = "dev@neon.system";
+    if (await userManager.FindByEmailAsync(userEmail) == null)
+    {
+        var user = new IdentityUser { UserName = userEmail, Email = userEmail, EmailConfirmed = true };
+        await userManager.CreateAsync(user, "User@123");
+    }
+}
