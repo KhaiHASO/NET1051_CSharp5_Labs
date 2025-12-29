@@ -1,0 +1,106 @@
+:root {
+    --neon-pink: #ff00ff;
+    --neon-blue: #00ffff;
+    --neon-yellow: #ffff00;
+    --dark-bg: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --text-color: #e0e0e0;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #121212, #1f1f1f);
+    border-bottom: 2px solid var(--neon-blue);
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.navbar-brand {
+    color: var(--neon-pink) !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--neon-pink);
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.btn-cyberpunk {
+    background: transparent;
+    border: 2px solid var(--neon-blue);
+    color: var(--neon-blue);
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    padding: 10px 25px;
+}
+
+.btn-cyberpunk:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 15px var(--neon-blue);
+}
+
+.neon-text-blue {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.neon-text-pink {
+    color: var(--neon-pink);
+    text-shadow: 0 0 5px var(--neon-pink);
+}
+
+.cyber-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.cyber-table tr {
+    background: #111;
+    border: 1px solid #333;
+}
+
+.cyber-table th {
+    color: var(--neon-yellow);
+    text-transform: uppercase;
+    padding: 15px;
+    border-bottom: 2px solid var(--neon-yellow);
+}
+
+.cyber-table td {
+    padding: 15px;
+    border-top: 1px solid #222;
+}
+
+/* Animations */
+@keyframes flicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 1;
+    }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+        opacity: 0.4;
+    }
+}
+
+.flicker {
+    animation: flicker 2s infinite;
+}
