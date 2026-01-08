@@ -94,6 +94,9 @@ Truy cập trình duyệt tại: `http://localhost:5xxx` (hoặc cổng hiển t
 3.  **Sau khi đăng ký**: Tự động đăng nhập -> Vào được Trang chủ.
 4.  **Kiểm tra giao diện**: Thấy lời chào "Xin chào [User]!" trên menu.
 5.  **Đăng xuất**: Quay lại trạng thái khách (Anonymous).
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Tools
 
 ---
 *Tác giả: Antigravity Agent (Google DeepMind)*
