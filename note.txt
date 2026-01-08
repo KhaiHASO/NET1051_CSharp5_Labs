@@ -1,0 +1,5 @@
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 10.0.0
+dotnet add package Microsoft.AspNetCore.Identity.UI --version 10.0.0
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 10.0.0
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 10.0.0
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design --version 10.0.0
