@@ -1,0 +1,61 @@
+@model bai4.Areas.Admin.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Dashboard Summary</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card-counter primary">
+            <i class="fa fa-users"></i>
+            <span class="count-numbers">@Model.TotalUsers</span>
+            <span class="count-name">Users</span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card-counter danger">
+            <i class="fa fa-user-tag"></i>
+            <span class="count-numbers">@Model.TotalRoles</span>
+            <span class="count-name">Roles</span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card-counter success">
+            <i class="fa fa-user-check"></i>
+            <span class="count-numbers">@Model.UnconfirmedUsers</span>
+            <span class="count-name">Unconfirmed</span>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card-counter info">
+            <i class="fa fa-user-plus"></i>
+            <span class="count-numbers">@Model.NewUsersToday</span>
+            <span class="count-name">New Today</span>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h3>Quick Actions</h3>
+    <div class="d-grid gap-2 d-md-block">
+        <button class="btn btn-primary" type="button">Create New User</button>
+        <button class="btn btn-secondary" type="button">Manage System Roles</button>
+    </div>
+</div>
+
+<!-- Placeholder for Charts -->
+<div class="mt-5 card">
+    <div class="card-header bg-dark text-white">
+        Users Growth (Chart.js Placeholder)
+    </div>
+    <div class="card-body">
+        <canvas id="myChart" style="max-height: 300px; display: block; box-sizing: border-box; height: 300px; width: 600px;"></canvas>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+@model List<bai3.ViewModels.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "User Roles";
+}
+
+<h1>User Roles</h1>
+
+<a asp-action="CreateRole" class="btn btn-secondary mb-3">Create Role (Test)</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@string.Join(", ", user.Roles)</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Admin" asp-action="ManageRoles" asp-route-userId="@user.UserId">
+                        Manage Roles
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
