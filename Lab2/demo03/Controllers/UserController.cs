@@ -164,4 +164,66 @@ public class UserController : Controller
             return View("Index");
         }
     }
+    [HttpGet]
+    public IActionResult Create()
+    {
+        var model = new CreateUserViewModel();
+        var allRoles = _roleManager.Roles.ToList();
+
+        foreach (var role in allRoles)
+        {
+            model.Roles.Add(new RoleSelectionViewModel
+            {
+                RoleId = role.Id,
+                RoleName = role.Name,
+                IsSelected = false
+            });
+        }
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(CreateUserViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = model.UserName,
+                Email = model.Email,
+                FullName = model.FullName,
+                Address = model.Address
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                var selectedRoles = model.Roles
+                    .Where(x => x.IsSelected)
+                    .Select(y => y.RoleName)
+                    .ToList();
+
+                if (selectedRoles.Any())
+                {
+                    var resultAdd = await _userManager.AddToRolesAsync(user, selectedRoles);
+                    if (!resultAdd.Succeeded)
+                    {
+                        ModelState.AddModelError("", "Cannot add selected roles to user");
+                        return View(model);
+                    }
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+        }
+
+        return View(model);
+    }
 }

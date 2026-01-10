@@ -8,7 +8,7 @@
 
 @if (Model.Any())
 {
-    <a asp-action="Register" asp-controller="Account" class="btn btn-primary mb-3" style="width:auto">Add New User</a>
+    <a asp-action="Create" asp-controller="User" class="btn btn-primary mb-3" style="width:auto">Add New User</a>
 
     <table class="table table-striped table-bordered">
         <thead>
@@ -53,7 +53,7 @@ else
                 Use the button below to create a user
             </h5>
             <a class="btn btn-primary" style="width:auto"
-               asp-controller="Account" asp-action="Register">
+               asp-controller="User" asp-action="Create">
                 Add new user
             </a>
         </div>
