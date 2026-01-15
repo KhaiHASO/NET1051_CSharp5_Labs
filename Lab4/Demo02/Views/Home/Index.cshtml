@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4 text-primary">CSharp5 - Slide 4 - Demo 02</h1>
+    <p class="lead">Claims-Based Authorization (Permission/Policy)</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-primary">
+            <div class="card-body">
+                <h5 class="card-title text-primary">Cơ Chế Permission</h5>
+                <p class="card-text">Sử dụng Custom Policy Provider để tạo Policy động theo cú pháp <code>Permission:TenQuyen</code>.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-success">
+            <div class="card-body">
+                <h5 class="card-title text-success">Quản Lý Quyền</h5>
+                <p class="card-text">Admin có thể gán Permission (như Grades.View, Grades.Edit) cho từng User thông qua bảng <code>AspNetUserClaims</code>.</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-success w-100">Vào Admin Panel</a>
+                }
+                else
+                {
+                    <button class="btn btn-outline-secondary w-100" disabled>Yêu cầu Admin</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-warning">
+            <div class="card-body">
+                <h5 class="card-title text-warning">Menu Động</h5>
+                <p class="card-text">Menu trên Navbar ẩn/hiện dựa vào việc User có Permission tương ứng hay không.</p>
+            </div>
+        </div>
+    </div>
+</div>

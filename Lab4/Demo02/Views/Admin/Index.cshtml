@@ -1,0 +1,36 @@
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUser>
+
+@{
+    ViewData["Title"] = "Quản lý Người Dùng";
+}
+
+<h1 class="text-primary mb-4">Danh Sách Người Dùng</h1>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Email</th>
+                    <th>User Id</th>
+                    <th>Thao Tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td><small class="text-muted">@user.Id</small></td>
+                        <td>
+                            <a asp-action="Permissions" asp-route-userId="@user.Id" class="btn btn-sm btn-info text-white">
+                                Quản lý Quyền
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

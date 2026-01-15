@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Điểm Số";
+}
+
+<div class="container mt-4">
+    <h1 class="text-success">Bảng Điểm Sinh Viên</h1>
+    <p>Bạn đang xem trang này vì có quyền <code>Grades.View</code>.</p>
+
+    <div class="mb-3">
+        @if (User.HasClaim(c => c.Type == "Permission" && c.Value == "Grades.Edit"))
+        {
+            <a asp-action="Edit" class="btn btn-warning">Chỉnh Sửa Điểm (Demo)</a>
+        }
+        else
+        {
+            <button class="btn btn-secondary" disabled>Bạn không có quyền Sửa</button>
+        }
+    </div>
+
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>Sinh Viên</th>
+                <th>Môn Học</th>
+                <th>Điểm</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Nguyễn Văn A</td><td>C# Base</td><td>8.5</td></tr>
+            <tr><td>Lê Thị B</td><td>ASP.NET Core</td><td>9.0</td></tr>
+            <tr><td>Trần Văn C</td><td>SQL Server</td><td>7.5</td></tr>
+        </tbody>
+    </table>
+</div>

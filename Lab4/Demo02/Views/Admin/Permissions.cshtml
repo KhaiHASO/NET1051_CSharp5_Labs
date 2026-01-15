@@ -1,0 +1,85 @@
+@model Demo02.ViewModels.UserPermissionsViewModel
+
+@{
+    ViewData["Title"] = "Phân Quyền";
+}
+
+<h2 class="mb-3">Phân Quyền Cho: <span class="text-primary">@Model.UserEmail</span></h2>
+
+<a asp-action="Index" class="btn btn-secondary mb-3">&larr; Quay lại danh sách</a>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="row">
+    <!-- Existing Permissions -->
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                Quyền Hiện Tại
+            </div>
+            <div class="card-body">
+                @if (Model.Permissions.Any())
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Permission Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in Model.Permissions)
+                            {
+                                <tr>
+                                    <td><span class="badge bg-success">@p</span></td>
+                                    <td>
+                                        <form asp-action="RemovePermission" method="post" class="d-inline">
+                                            <input type="hidden" name="userId" value="@Model.UserId" />
+                                            <input type="hidden" name="permission" value="@p" />
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Xoá quyền này?');">Xoá</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted">User chưa có quyền nào.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Permission -->
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                Cấp Quyền Mới
+            </div>
+            <div class="card-body">
+                <form asp-action="AddPermission" method="post">
+                    <input type="hidden" name="userId" value="@Model.UserId" />
+                    <div class="mb-3">
+                        <label class="form-label">Chọn Quyền:</label>
+                        <select name="permission" class="form-select">
+                            <option value="Grades.View">Grades.View (Xem Điểm)</option>
+                            <option value="Grades.Edit">Grades.Edit (Sửa Điểm)</option>
+                            <option value="Reports.View">Reports.View (Xem Báo Cáo)</option>
+                            <option value="AdminPanel.Access">AdminPanel.Access (Truy cập Admin)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Thêm Quyền</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
