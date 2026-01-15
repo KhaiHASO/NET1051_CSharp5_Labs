@@ -1,0 +1,90 @@
+@model Demo01.ViewModels.UserClaimsViewModel
+
+@{
+    ViewData["Title"] = "Manage Claims";
+}
+
+<h2>Manage Claims for: <span class="text-primary">@Model.UserEmail</span></h2>
+
+<a asp-action="Index" class="btn btn-secondary mb-3">&larr; Back to Users</a>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                Existing Claims
+            </div>
+            <div class="card-body">
+                @if (Model.Claims.Any())
+                {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Value</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var claim in Model.Claims)
+                            {
+                                <tr>
+                                    <td>@claim.Type</td>
+                                    <td>@claim.Value</td>
+                                    <td>
+                                        <form asp-action="RemoveClaim" method="post" onsubmit="return confirm('Are you sure?');">
+                                            <input type="hidden" name="userId" value="@Model.UserId" />
+                                            <input type="hidden" name="type" value="@claim.Type" />
+                                            <input type="hidden" name="value" value="@claim.Value" />
+                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted">No claims found for this user.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                Add New Claim
+            </div>
+            <div class="card-body">
+                <form asp-action="AddClaim" method="post">
+                    <input type="hidden" name="userId" value="@Model.UserId" />
+                    <div class="mb-3">
+                        <label class="form-label">Claim Type</label>
+                        <select name="type" class="form-select">
+                            <option value="Department">Department</option>
+                            <option value="Position">Position</option>
+                            <option value="CanGrade">CanGrade</option>
+                            <option value="Custom">Custom (Type in Value)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Claim Value</label>
+                        <input type="text" name="value" class="form-control" required placeholder="e.g. IT, Teacher, true" />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Add Claim</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

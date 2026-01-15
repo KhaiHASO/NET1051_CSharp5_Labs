@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4">CSharp5 - Slide 4 - Demo 01</h1>
+    <p class="lead">Demo on ASP.NET Core Identity & Claims-based Authorization</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">User Claims</h5>
+                <p class="card-text">Learn how standard Identity Users can store additional key user data via Claims.</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+                 <a asp-controller="Claims" asp-action="My" class="btn btn-outline-primary w-100">View My Claims</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Manage Claims</h5>
+                <p class="card-text">Admin interface to Add or Remove claims for specific users. Data stored in <code>AspNetUserClaims</code>.</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+                 <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-danger w-100">Admin Manage</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Policy Authorization</h5>
+                <p class="card-text">Restrict access to Controller Actions using Policies (e.g., <code>RequireCanGrade</code>).</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0">
+                 <a asp-controller="Grades" asp-action="Index" class="btn btn-outline-success w-100">Try Grades Page</a>
+            </div>
+        </div>
+    </div>
+</div>

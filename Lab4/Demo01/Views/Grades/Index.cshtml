@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Grades";
+}
+
+<div class="container text-center mt-5">
+    <div class="p-5 bg-light rounded-3 shadow">
+        <h1 class="display-4 text-success">Access Granted!</h1>
+        <p class="lead">You are viewing the <strong>Grades</strong> page.</p>
+        <hr class="my-4">
+        <p>This page is protected by the policy <code>RequireCanGrade</code>.</p>
+        <p>You have the claim <strong>CanGrade: true</strong>.</p>
+        <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="Index" role="button">Go Home</a>
+    </div>
+</div>
