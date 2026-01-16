@@ -40,7 +40,7 @@ Khi start app, seed data khởi tạo:
     -   User: `user@demo.com` / `User@12345`
     -   Permissions: Chỉ có quyền xem điểm (`Grades.View`).
 
-## 4. Kịch bản Demo (Script giảng dạy)
+## 4. Kịch bản Demo
 
 ### Phần 1: Setup & Kiểm tra Database
 1.  Chạy `dotnet ef database update`.
