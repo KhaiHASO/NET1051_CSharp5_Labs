@@ -67,30 +67,81 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 > - Nếu dùng `AddScoped` hoặc `AddTransient`: Mỗi Request (F5) sẽ tạo ra một instance Repository mới -> **Mất dữ liệu cũ**.
 > - Dùng `AddSingleton`: Chỉ tạo 1 instance duy nhất tồn tại suốt vòng đời ứng dụng -> **Giữ được dữ liệu**.
 
----
-
-## 3. Kịch bản Demo (Dành cho Giảng viên)
-
-Kịch bản live coding từng bước trên VS Code để sinh viên dễ theo dõi.
-
-| Bước | Hành động & Code | Lời thoại giảng viên (Ý chính) |
-| :--- | :--- | :--- |
-| **B1. Setup** | Chạy lệnh tạo project & add package (như mục 1).<br>Xóa file rác `WeatherForecast`. | "Đầu tiên thầy tạo project trắng. Bài này cần dùng phương thức PATCH nên bắt buộc phải cài thêm gói `NewtonsoftJson` nhé." |
-| **B2. Model** | Tạo `Reservation.cs`. | "Tạo class Model đơn giản. Nhớ là ID chúng ta sẽ để tự tăng trong Repository." |
-| **B3. Repo** | Tạo `IRepository` trước, sau đó tạo `Repository` implement nó.<br>Dùng `Dictionary` làm DB. | "Chúng ta dùng Interface để tuân thủ nguyên lý Dependency Inversion. Sau này các em đi làm, đổi DB chỉ cần viết class Repository mới là xong." |
-| **B4. Controller** | Tạo `ReservationController`.<br>Viết Constructor nhận `IRepository`. | "Tuyệt đối không `new Repository()` ở đây nhé. Hãy để DI Container của .NET lo việc đó. Code sẽ sạch và dễ test hơn." |
-| **B5. Config** | Vào `Program.cs`.<br>Thêm `AddSingleton` và `AddNewtonsoftJson`. | "Chỗ này quan trọng nhất bài: Vì sao thầy dùng Singleton? Vì thầy muốn dữ liệu còn nguyên khi thầy F5 trình duyệt. Nếu thầy dùng Scoped, biến Dictionary sẽ bị reset về rỗng ngay." |
-| **B6. Run** | `dotnet run`.<br>Mở Postman test GET/POST. | "Rồi, project đã chạy. Thầy thử POST một bản ghi mới, sau đó GET lại xem nó có còn đó không nhé (chứng minh Singleton hoạt động)." |
+--
 
 ---
 
-## 4. Các API Endpoints
+## 4. Hướng dẫn Test với Postman (Chi tiết)
 
-| Method | URL | Mô tả |
-| :--- | :--- | :--- |
-| `GET` | `/api/reservation` | Lấy danh sách tất cả |
-| `GET` | `/api/reservation/{id}` | Lấy chi tiết theo ID |
-| `POST` | `/api/reservation` | Tạo mới (kèm body JSON) |
-| `PUT` | `/api/reservation` | Cập nhật toàn bộ (kèm body JSON) |
-| `PATCH` | `/api/reservation/{id}` | Cập nhật 1 phần (kèm body Patch JSON) |
-| `DELETE` | `/api/reservation/{id}` | Xóa theo ID |
+Dưới đây là ví dụ cụ thể Body JSON để các bạn copy vào Postman test. 
+**URL Mặc định**: `http://localhost:5xxx/api/reservation` (Thay `5xxx` bằng port thực tế khi chạy `dotnet run`).
+
+### 1. Lấy danh sách (GET All)
+- **Method**: `GET`
+- **URL**: `/api/reservation`
+- **Body**: Không có.
+
+### 2. Lấy chi tiết (GET By ID)
+- **Method**: `GET`
+- **URL**: `/api/reservation/1`
+
+### 3. Thêm mới (POST)
+- **Method**: `POST`
+- **URL**: `/api/reservation`
+- **Body** (Chọn tab **Body** -> **Raw** -> Chọn **JSON**):
+```json
+{
+  "name": "Nguyen Van A",
+  "startLocation": "Ha Noi",
+  "endLocation": "Ho Chi Minh"
+}
+```
+
+### 4. Cập nhật toàn bộ (PUT)
+*Lưu ý: PUT yêu cầu gửi đầy đủ thông tin object, nếu thiếu field nào field đó sẽ bị null/default.*
+- **Method**: `PUT`
+- **URL**: `/api/reservation`
+- **Body** (Raw JSON):
+```json
+{
+  "id": 1,
+  "name": "Nguyen Van A (Da sua)",
+  "startLocation": "Ha Noi",
+  "endLocation": "Da Nang"
+}
+```
+
+### 5. Cập nhật một phần (PATCH) - *Tính năng chính*
+*Sử dụng chuẩn **JSON Patch** (RFC 6902) để chỉ sửa đúng các trường cần thiết.*
+> [!IMPORTANT]
+> Để tránh lỗi **415 Unsupported Media Type**, bạn **BẮT BUỘC** phải set Header:
+> - **Key**: `Content-Type`
+> - **Value**: `application/json-patch+json` (không phải `application/json`)
+
+- **Method**: `PATCH`
+- **URL**: `/api/reservation/1`
+- **Body** (Raw JSON). Lưu ý đây là một **Mảng** `[]`:
+```json
+[
+  {
+    "op": "replace",
+    "path": "/name",
+    "value": "Ten Moi (Patch)"
+  },
+  {
+    "op": "replace",
+    "path": "/endLocation",
+    "value": "Nha Trang"
+  }
+]
+```
+> **Giải thích JSON Patch**:
+> - `op`: Operation (replace, add, remove, copy, move, test). Ở đây dùng `replace`.
+> - `path`: Tên property cần sửa (có dấu `/` ở đầu).
+> - `value`: Giá trị mới.
+
+### 6. Xóa (DELETE)
+- **Method**: `DELETE`
+- **URL**: `/api/reservation/1`
+- **Response**: Status **200 OK** (Body sẽ **rỗng/Empty**).
+  > *Lưu ý: Code Controller đang trả về `void` nên sẽ không có nội dung JSON nào được trả về, chỉ cần check Status Code là 200 là thành công.*
