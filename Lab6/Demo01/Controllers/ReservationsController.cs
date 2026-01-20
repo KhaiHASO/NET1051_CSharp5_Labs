@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DemoScaffoldingAPI.Data;
-using DemoScaffoldingAPI.Models;
+using Demo01.Data;
+using Demo01.Models;
 
-namespace DemoScaffoldingAPI.Controllers
+namespace Demo01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,6 +1,6 @@
 # Demo 1: Tạo RESTful API với Scaffolding và Entity Framework Core
 
-Dự án này (`DemoScaffoldingAPI`) là một ví dụ minh họa cho bài học "Lesson 6: ASP.NET Core Web API - SQL". Nó thể hiện cách tạo một API quản lý đặt chỗ (`Reservation`) sử dụng kỹ thuật Code First và mô phỏng kết quả của quá trình Scaffolding.
+Dự án này (`Demo01`) là một ví dụ minh họa cho bài học "Lesson 6: ASP.NET Core Web API - SQL". Nó thể hiện cách tạo một API quản lý đặt chỗ (`Reservation`) sử dụng kỹ thuật Code First và mô phỏng kết quả của quá trình Scaffolding.
 
 ## 1. Giải thích Code
 
@@ -17,9 +17,36 @@ Dự án này (`DemoScaffoldingAPI`) là một ví dụ minh họa cho bài họ
 *   **Lợi ích**: Tiết kiệm thời gian, tạo ra cấu trúc chuẩn.
 *   **Thực tế**: Trong Demo này, chúng ta viết code thủ công (hoặc copy) để hiểu rõ cấu trúc mà Scaffolding tạo ra.
 
-## 3. Kịch bản Demo (Dành cho Giảng viên)
+## 3. Cài đặt và Cấu hình Swagger
 
-Thực hiện các bước sau để demo cho sinh viên:
+Để tích hợp Swagger (OpenAPI) vào dự án, chúng ta thực hiện các bước sau:
+
+1.  **Cài đặt Package**:
+    Cài đặt thư viện `Swashbuckle.AspNetCore` từ NuGet:
+    ```powershell
+    dotnet add package Swashbuckle.AspNetCore
+    ```
+
+2.  **Đăng ký Service**:
+    Trong `Program.cs`, thêm các service sau vào container:
+    ```csharp
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    ```
+
+3.  **Cấu hình Middleware**:
+    Kích hoạt Swagger Middleware trong pipeline xử lý request (thường trong môi trường Development):
+    ```csharp
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+    ```
+
+## 4. Kịch bản Demo 
+
+Thực hiện các bước sau để demo
 
 ### Bước 1: Tạo Database (Migration)
 Mở **Package Manager Console** (hoặc Terminal) và chạy các lệnh sau để tạo database `CSharp5Slide6Demo01`:

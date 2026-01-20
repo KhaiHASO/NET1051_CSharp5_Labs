@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DemoScaffoldingAPI.Models
+namespace Demo01.Models
 {
     public class Reservation
     {

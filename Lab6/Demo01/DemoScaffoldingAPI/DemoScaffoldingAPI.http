@@ -1,6 +1,0 @@
-@DemoScaffoldingAPI_HostAddress = http://localhost:5118
-
-GET {{DemoScaffoldingAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

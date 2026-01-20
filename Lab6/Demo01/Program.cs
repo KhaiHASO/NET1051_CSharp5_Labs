@@ -1,4 +1,4 @@
-using DemoScaffoldingAPI.Data;
+using Demo01.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

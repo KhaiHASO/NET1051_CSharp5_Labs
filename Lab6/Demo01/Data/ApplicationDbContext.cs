@@ -1,7 +1,7 @@
-using DemoScaffoldingAPI.Models;
+using Demo01.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DemoScaffoldingAPI.Data
+namespace Demo01.Data
 {
     public class ApplicationDbContext : DbContext
     {
