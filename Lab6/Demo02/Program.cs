@@ -33,4 +33,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Redirect root URL to Swagger
+app.MapGet("/", async context =>
+{
+    context.Response.Redirect("/swagger/index.html");
+    await Task.CompletedTask;
+});
+
 app.Run();
