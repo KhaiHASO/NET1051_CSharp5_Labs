@@ -6,12 +6,37 @@
 
 Trong dự án này, chúng ta tách biệt logic gọi Database ra khỏi Controller thông qua Repository Pattern.
 
-*   **Luồng xử lý (Data Flow)**:
-    `Controller` -> `IRepository` -> `Repository` -> `DbContext` -> `SQL Server`
+### 🏛️ Repository Pattern là gì?
+Repository Pattern là lớp trung gian kết nối giữa **Business Logic Layer** (Controller/Service) và **Data Access Layer** (DbContext/Database). Nó đóng vai trò "kho chứa" logic truy xuất dữ liệu, giúp Controller không cần biết dữ liệu được lấy từ đâu (SQL, API, File...).
 
-*   **Tại sao dùng Repository Pattern?**
-    *   **Decoupling (Giảm sự phụ thuộc)**: Controller không cần biết chi tiết về DbContext hay EF Core. Nếu sau này đổi DB (VD: từ SQL Server sang MongoDB), chỉ cần sửa Repository, không cần sửa Controller.
-    *   **Testability (Dễ kiểm thử)**: Dễ dàng Mock `IRepository` để Unit Test cho Controller mà không cần kết nối Database thật.
+### 🧠 Tại sao cần Repository Pattern? (So sánh với cách thường)
+
+**Cách thường (Không dùng Repository):**
+- Controller gọi trực tiếp `DbContext`.
+- **Hậu quả**:
+  - Code trong Controller bị rối, trộn lẫn logic xử lý API và logic truy vấn Data.
+  - Nếu muốn đổi logic query (ví dụ: cần lọc thêm điều kiện `IsDeleted = false` cho mọi query), ta phải sửa ở **tất cả** các Action trong Controller.
+  - Khó kiểm thử Unit Test vì Controller dính chặt với DbContext (kết nối DB thật).
+
+**Dùng Repository Pattern:**
+- Controller chỉ gọi `IRepository`. Repository gọi `DbContext`.
+- **Lợi ích**:
+  1. **Decoupling (Giảm phụ thuộc)**: Controller chỉ biết đến Interface `IRepository`. Nếu sau này đổi từ SQL Server sang MongoDB, chỉ cần viết class Repository mới, Controller không cần sửa dòng code nào.
+  2. **Code Reusability (Tái sử dụng)**: Các logic truy vấn phức tạp (VD: Lấy danh sách kèm phân trang, tìm kiếm) được viết một lần trong Repository và tái sử dụng ở nhiều nơi.
+  3. **Unit Testing Dễ dàng**: Ta dễ dàng tạo một `MockRepository` giả lập dữ liệu trả về để test Controller mà không cần động chạm đến Database thật.
+
+### 🔄 Luồng dữ liệu (Code Flow)
+`Client` (Postman) 
+  ⬇️ 
+`Controller` (Nhận Request) 
+  ⬇️ 
+`IRepository` (Interface trừu tượng) 
+  ⬇️ 
+`Repository Class` (Thực thi logic truy vấn, dùng DbContext) 
+  ⬇️ 
+`DbContext` (Ánh xạ Object <-> SQL) 
+  ⬇️ 
+`SQL Server` (Lưu trữ)
 
 ## 2. Fluent API Configuration
 

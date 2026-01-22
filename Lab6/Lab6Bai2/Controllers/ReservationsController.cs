@@ -1,38 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Lab6Bai2.Data;
+using Lab6Bai2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using DemoScaffolinding02.Data;
-using DemoScaffolinding02.Model;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace DemoScaffolinding02
+namespace Lab6Bai2.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class ReservationsController : ControllerBase
     {
-        private readonly DemoScaffolinding02Context _context;
+        private readonly ReservationContext _context;
 
-        public ReservationsController(DemoScaffolinding02Context context)
+        public ReservationsController(ReservationContext context)
         {
             _context = context;
         }
 
-        // GET: api/Reservations
+        // GET: api/reservations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reservation>>> GetReservation()
+        public async Task<ActionResult<IEnumerable<Reservation>>> GetReservations()
         {
-            return await _context.Reservation.ToListAsync();
+            return await _context.Reservations.ToListAsync();
         }
 
-        // GET: api/Reservations/5
+        // GET: api/reservations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Reservation>> GetReservation(int id)
         {
-            var reservation = await _context.Reservation.FindAsync(id);
+            var reservation = await _context.Reservations.FindAsync(id);
 
             if (reservation == null)
             {
@@ -42,8 +39,17 @@ namespace DemoScaffolinding02
             return reservation;
         }
 
-        // PUT: api/Reservations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/reservations
+        [HttpPost]
+        public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
+        {
+            _context.Reservations.Add(reservation);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetReservation", new { id = reservation.Id }, reservation);
+        }
+
+        // PUT: api/reservations/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReservation(int id, Reservation reservation)
         {
@@ -73,28 +79,17 @@ namespace DemoScaffolinding02
             return NoContent();
         }
 
-        // POST: api/Reservations
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
-        {
-            _context.Reservation.Add(reservation);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetReservation", new { id = reservation.Id }, reservation);
-        }
-
-        // DELETE: api/Reservations/5
+        // DELETE: api/reservations/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReservation(int id)
         {
-            var reservation = await _context.Reservation.FindAsync(id);
+            var reservation = await _context.Reservations.FindAsync(id);
             if (reservation == null)
             {
                 return NotFound();
             }
 
-            _context.Reservation.Remove(reservation);
+            _context.Reservations.Remove(reservation);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +97,7 @@ namespace DemoScaffolinding02
 
         private bool ReservationExists(int id)
         {
-            return _context.Reservation.Any(e => e.Id == id);
+            return _context.Reservations.Any(e => e.Id == id);
         }
     }
 }
