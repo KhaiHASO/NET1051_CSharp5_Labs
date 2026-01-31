@@ -25,7 +25,7 @@ Dự án này minh họa cách sử dụng **Attribute Routing** trong ASP.NET C
     - Nhấn F5 (Visual Studio) hoặc chạy lệnh `dotnet run` trong terminal.
     - Truy cập Swagger UI tại địa chỉ hiển thị trong terminal (thường là `http://localhost:xxxx/swagger`).
 
-## 3. Kịch bản Demo (Script cho Giảng viên/Sinh viên)
+## 3. Kịch bản Demo
 
 **Bước 1: Show cấu hình trong `Program.cs`**
 - Mở file `Program.cs`.

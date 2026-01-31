@@ -1,0 +1,42 @@
+@model Demo01.Models.Reservation
+
+@{
+    ViewData["Title"] = "Create Reservation";
+}
+
+<div class="alert alert-info" role="alert">
+    <strong>Info:</strong> Code đang dùng <code>JsonConvert.SerializeObject</code> và <code>PostAsync</code> với <code>application/json</code> để gửi dữ liệu. (Theo Slide 21)
+</div>
+
+<h2>Create Reservation</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="StartLocation" class="control-label"></label>
+                <input asp-for="StartLocation" class="form-control" />
+                <span asp-validation-for="StartLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="EndLocation" class="control-label"></label>
+                <input asp-for="EndLocation" class="form-control" />
+                <span asp-validation-for="EndLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
